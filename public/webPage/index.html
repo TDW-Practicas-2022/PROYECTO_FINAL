@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Página de presentación de la aplicación</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina de presentación del frontend">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia</h1>
+    </div>
+    <div class="div-botones">
+        <nav>
+            <input type="button" name="login" value="Página Login" onclick="IrALogin()" />
+            <input type="button" name="register" value="Página Register" onclick="IrARegister()" />
+        </nav>
+    </div>
+    <div class="cabecera-presentacion">
+        <h3 id="bienvenida">Bienvenido a la aplicación web del proyecto final de TDW!!</h3>
+        <p>En esta aplicación se pueden gestionar las altas, bajas, modificaciones y borrado de Productos, Personas y Entidades!!</p>
+        <p>Esta práctica ha sido desarrollada en pareja por:</p>
+        <ul class="lista-presentacion">
+            <li>Álvaro Aviles Redondo - bp0259</li>
+            <li>Jesus Anton Diaz - bp0005</li>
+        </ul>
+    </div>
+    <div class="div-imagen">
+        <img class="imagen" src="https://marquesfernandes.com/wp-content/uploads/2020/08/Servidor-e1597608701874-1024x379.jpg">
+    </div>
+</div>
+<script>
+    function IrALogin(){
+        location.replace("http://127.0.0.1:8000/webPage/login/login.html")
+    }
+    function IrARegister(){
+        location.replace("http://127.0.0.1:8000/webPage/register/registerStep1.html")
+    }
+</script>
+</body>
+</html>

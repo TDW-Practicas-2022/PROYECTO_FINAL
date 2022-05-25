@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Gestion de registro de usuarios </title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina de gestion de registro de usuarios  del subsistema writer del frontend">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../../../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body onload="Carga()">
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia - Gestion de registro de usuarios</h1>
+    </div>
+    <div class="div-volver">
+        <input id="boton-volver" type="button" name="Volver" value="Volver" onclick="Volver()" />
+    </div>
+    <div id="div_info_usuario">
+    </div>
+    <div class="contenido-usuarios" id="div-usuarios">
+    </div>
+</div>
+</body>
+<script>
+    let userId = null
+    let users = null
+
+    function Carga(){
+        //Recuperamos los datos del querystring del URL
+        const urlParams = new URLSearchParams(window.location.search);
+        userId = urlParams.get('userId');
+
+        let retrievedUsersArray = localStorage.getItem('pendingUsers');
+        users = JSON.parse(retrievedUsersArray);
+
+        console.log(users);
+        CargaInfoUsuario();
+        MostrarUsuarios();
+    }
+
+    function MostrarUsuarios(){
+
+        for (let i = 0; i < users.length ; i++){
+            let p = document.createElement("p");
+            let text = document.createTextNode("Nombre de usuario: "+users[i].username +" ");
+            p.appendChild(text);
+
+            let aceptarButton = document.createElement("button");
+            aceptarButton.name = "Aceptar";
+            aceptarButton.textContent = "Aceptar Solicitud";
+            aceptarButton.setAttribute("onclick", "AceptarUser(\""+users[i].username+"\")");
+
+            let rechazarButton = document.createElement("button");
+            rechazarButton.name = "Rechazar";
+            rechazarButton.textContent = "Rechazar Solicitud";
+            rechazarButton.setAttribute("onclick", "RechazarUser(\""+users[i].username+"\")");
+
+            p.appendChild(aceptarButton);
+            p.appendChild(rechazarButton);
+
+            document.getElementById("div-usuarios").appendChild(p);
+        }
+    }
+
+    function AceptarUser(username){
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/gestionUsers/pendingUsers/aceptNewUser.html?userId=" + userId + "&username=" + username);
+    }
+
+    function RechazarUser (username){
+        let arrayAux = [];
+
+        for (let i = 0; i < users.length ; i++){
+            if(users[i].username != username){
+                arrayAux.push(users[i]);
+            }
+        }
+
+        localStorage.setItem('pendingUsers', JSON.stringify(arrayAux));
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/gestionUsers/pendingUsers/pendingUsers.html?userId=" + userId);
+    }
+
+    function Volver(){
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/gestionUsers/gestionUsers.html?userId=" + userId);
+    }
+
+    function CargaInfoUsuario(){
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/users/' + userId,
+            headers: {"Authorization": localStorage.getItem('authHeader')},
+            // dataType: 'json',
+            success: function (data) {
+                let p = document.createElement("p");
+                let text = document.createTextNode("User: " +data.user.username+ " - Role: " +data.user.role);
+                p.appendChild(text);
+                document.getElementById("div_info_usuario").appendChild(p);
+            }
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Reader Perfil</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="Pagina perfil del subsistema reader del frontend">
+  <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+  <meta name="author" content="Jesus Anton Diaz - bp0005">
+  <!--- estilos con CSS -->
+  <link rel="stylesheet" href="../../styles.css">
+  <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body onload="CargaDatosReader()">
+<div class="contenedor">
+  <div class="cabecera-principal">
+    <h1>Anales de la Ciencia - Perfil de usuario</h1>
+  </div>
+  <div class="div-volver">
+    <input id="boton-volver" type="button" name="Volver" value="Volver" onclick="Volver()" />
+  </div>
+  <div class= "div_info" id="div_info_usuario">
+  </div>
+  <div class="datos-reader" id="datos-reader">
+  </div>
+</div>
+<script>
+  let userId = null
+
+  function CargaDatosReader(){
+    //Recuperamos los datos del querystring del URL para poder hacer las operaciones
+    const urlParams = new URLSearchParams(window.location.search);
+    userId= urlParams.get('userId');
+
+    CargaInfoUsuario();
+
+    $.ajax({
+      type: "GET",
+      url: '/api/v1/users/' +userId,
+      headers: {"Authorization": localStorage.getItem('authHeader')},
+      // dataType: 'json',
+      success: function (data) {
+        MostrarDatosUsuario(data.user);
+      }
+    })
+  }
+
+  function MostrarDatosUsuario(usuario) {
+    console.log(usuario);
+
+    let h3 = document.createElement("h3");
+    let text_h3 = document.createTextNode("Datos del usuario " +usuario.username+ ":");
+
+    h3.appendChild(text_h3);
+    document.getElementById("datos-reader").appendChild(h3);
+
+    let idUsuario = document.createElement("h5");
+    let textoId = document.createTextNode("Id: " +usuario.id);
+
+    idUsuario.appendChild(textoId);
+    document.getElementById("datos-reader").appendChild(idUsuario);
+
+    let nombreUsuario = document.createElement("h5");
+    let textoNombre = document.createTextNode("Nombre: " +usuario.username);
+
+    nombreUsuario.appendChild(textoNombre);
+    document.getElementById("datos-reader").appendChild(nombreUsuario);
+
+    let emailUsuario = document.createElement("h5");
+    let textoEmail = document.createTextNode("Email: " +usuario.email);
+
+    emailUsuario.appendChild(textoEmail);
+    document.getElementById("datos-reader").appendChild(emailUsuario);
+
+    let rolUsuario = document.createElement("h5");
+    let textoRol = document.createTextNode("Role: " +usuario.role);
+
+    rolUsuario.appendChild(textoRol);
+    document.getElementById("datos-reader").appendChild(rolUsuario);
+  }
+
+  function CargaInfoUsuario(){
+    $.ajax({
+      type: "GET",
+      url: '/api/v1/users/' + userId,
+      headers: {"Authorization": localStorage.getItem('authHeader')},
+      // dataType: 'json',
+      success: function (data) {
+        let p = document.createElement("p");
+        let text = document.createTextNode("User: " +data.user.username+ " - Role: " +data.user.role);
+        p.appendChild(text);
+        document.getElementById("div_info_usuario").appendChild(p);
+      }
+    });
+  }
+
+  function Volver(){
+    location.replace("http://127.0.0.1:8000/webPage/readerSubsystem/reader.html?userId=" +userId);
+  }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Página de registro 2 de la aplicación</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina de registro 2 del frontend">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body>
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia - Registro paso 2/2</h1>
+    </div>
+    <div class="formulario-login">
+        <h4>Rellena los siguientes campos para compeltar el registro:</h4>
+        <form id="form-register">
+            <label for="email">Email: </label>
+            <input type="text" id="email" name="email" placeholder="example@example.com" />
+            <br><br>
+            <input type="button" id="btn-register" value="Registro" onclick="Registro()"/>
+        </form>
+        <h4>Una vez compeltado el registro, debe esperar a que un Writer le de de alta en el sistema.</h4>
+    </div>
+</div>
+<script>
+    function Registro(){
+
+        let retrievedUsersArray = localStorage.getItem('pendingUsers');
+        let parsedUsersArray = JSON.parse(retrievedUsersArray);
+
+        parsedUsersArray[parsedUsersArray.length - 1].email = $("#email").val();
+
+        localStorage.setItem('pendingUsers', JSON.stringify(parsedUsersArray));
+
+        location.replace("http://127.0.0.1:8000/webPage/index.html")
+    }
+</script>
+</body>
+</html>

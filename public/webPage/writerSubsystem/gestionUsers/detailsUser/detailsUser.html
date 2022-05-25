@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Details User</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina details de un usuario">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../../../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body onload="Carga()">
+    <div class="contenedor">
+        <div class="cabecera-principal">
+            <h1>Anales de la Ciencia - Detalles del usuario</h1>
+        </div>
+        <div class="div-volver">
+            <input id="boton-volver" type="button" name="Volver" value="Volver" onclick="Volver()" />
+        </div>
+        <div id="div_info_usuario">
+        </div>
+        <div class="contenido-usuarios" id="div-usuarios">
+        </div>
+    </div>
+</body>
+<script>
+    let idUsuarioDetalles = null
+    let userId = null
+
+    function Carga(){
+        //Recuperamos los datos del querystring del URL
+        const urlParams = new URLSearchParams(window.location.search);
+        userId = urlParams.get('userId');
+        idUsuarioDetalles = urlParams.get('idUsuarioDetalles');
+
+        CargaInfoUsuario();
+        MostrarInfoUsuario();
+    }
+
+    function MostrarInfoUsuario(){
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/users/'+ idUsuarioDetalles,
+            headers: {"Authorization": localStorage.getItem('authHeader')},
+            // dataType: 'json',
+            success: function (data) {
+                let h3 = document.createElement("h3");
+                let text_h3 = document.createTextNode("Datos del usuario "+data.user.username);
+                h3.appendChild(text_h3);
+                document.getElementById("div-usuarios").appendChild(h3);
+
+                let p_id = document.createElement("p");
+                let text_id = document.createTextNode("- Id: "+data.user.id);
+                p_id.appendChild(text_id);
+                document.getElementById("div-usuarios").appendChild(p_id);
+
+                let p_username = document.createElement("p");
+                let text_username = document.createTextNode("- Username: "+data.user.username);
+                p_username.appendChild(text_username);
+                document.getElementById("div-usuarios").appendChild(p_username);
+
+                let p_email = document.createElement("p");
+                let text_email = document.createTextNode("- Email: "+data.user.email);
+                p_email.appendChild(text_email);
+                document.getElementById("div-usuarios").appendChild(p_email);
+
+                let p_role = document.createElement("p");
+                let text_role = document.createTextNode("- Role: "+data.user.role);
+                p_role.appendChild(text_role);
+                document.getElementById("div-usuarios").appendChild(p_role);
+
+                let p_realname = document.createElement("p");
+                let text_realname = document.createTextNode("- Realname: "+data.user.realname);
+                p_realname.appendChild(text_realname);
+                document.getElementById("div-usuarios").appendChild(p_realname);
+
+                let p_birthDate = document.createElement("p");
+                let text_birthDate = document.createTextNode("- BirthDate: "+data.user.birthDate);
+                p_birthDate.appendChild(text_birthDate);
+                document.getElementById("div-usuarios").appendChild(p_birthDate);
+
+                let p_isActive = document.createElement("p");
+                let text_isActive = document.createTextNode("- IsActive: "+data.user.isActive);
+                p_isActive.appendChild(text_isActive);
+                document.getElementById("div-usuarios").appendChild(p_isActive);
+            }
+        });
+    }
+
+    function Volver(){
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/gestionUsers/gestionUsers.html?userId="+ userId);
+    }
+
+    function CargaInfoUsuario(){
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/users/' + userId,
+            headers: {"Authorization": localStorage.getItem('authHeader')},
+            // dataType: 'json',
+            success: function (data) {
+                let p = document.createElement("p");
+                let text = document.createTextNode("User: " +data.user.username+ " - Role: " +data.user.role);
+                p.appendChild(text);
+                document.getElementById("div_info_usuario").appendChild(p);
+            }
+        });
+    }
+</script>
+</html>

@@ -1,0 +1,119 @@
+body { background-color: #3B3B3B }
+
+p,li { color: #D38740 }
+
+h1, label, h4, h3 ,h2, h5{
+    color: #D38740;
+    text-align: center;
+}
+
+#bienvenida{
+    text-decoration: underline;
+}
+
+.cabecera-principal {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #D38740;
+}
+
+.cabecera-presentacion {
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.lista-presentacion{
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.div-imagen{
+    text-align: center;
+}
+
+.imagen{
+    text-align: center;
+    width: 40%;
+    margin-top: 40px;
+}
+
+.div-botones, .botones-login {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.formulario-login{
+    text-align: center;
+}
+
+.div-logout, #info-usuario{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.div-botonesCrear{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.contenido, #fotos{
+    display: flex;
+    text-align: center;
+}
+
+.div_izquierda, .div_centro,  .div_derecha{
+    width: 33%;
+    margin-top: 20px;
+}
+
+.imageProducto, .imagePersona, .imageEntidad{
+    width: 5%;
+}
+
+/* ####################################################*/
+/* Estilos de la página details */
+/* ####################################################*/
+
+#div-botonVolver-details{
+    margin-top: 10px;
+}
+
+.div_izquierda_details, .div_derecha_details, #div_entidades, #div_personas, #div_productos{
+    margin-top: 40px;
+    width: 50%;
+}
+
+/* ####################################################*/
+/* Estilos de la página createProducto*/
+/* ####################################################*/
+
+.div-volver{
+    margin-top: 10px;
+}
+
+#div_formulario_crear, #div_formulario_editar{
+    text-align: center;
+}
+
+.botones-readerPage, .botones-writerPage{
+    display: flex;
+    margin-top: 10px;
+}
+
+#div-usuarios, #div_formulario_alta{
+    text-align: center;
+}
+
+.relaciones{
+    display: flex;
+    margin-top: 10px;
+}
+
+#relaciones_entidades, #relaciones_personas, #relaciones_productos{
+    margin-top: 40px;
+    width: 50%;
+    text-align: center;
+}

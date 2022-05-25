@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Aceptar Usuario</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Página de procesado de una solicitud de alta de un nuevo usuario">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../../../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body onload="Carga()">
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia - Alta usuario</h1>
+    </div>
+    <div class="div-volver-editar-producto">
+        <input id="boton-volver" type="button" name="Volver" value="Volver" onclick="Volver()" />
+    </div>
+    <div id="div_info_usuario">
+    </div>
+    <div id="div_formulario_alta">
+        <form id="form_edit">
+            <h3>Elige el rol del nuevo usuario para darle de alta en el sistema:</h3>
+            <label for="Role">Nombre del producto: </label>
+            <select name="Role" id="Role">
+                <option value="writer">writer</option>
+                <option value="reader">reader</option>
+            </select>
+            <br><br>
+            <input type="button" name="Dar de alta" value="Dar de alta" onclick="AltaUsuario()" />
+        </form>
+    </div>
+    <!--<div class="contenido">
+     </div>-->
+</div>
+<script>
+    let userId = null
+    let username = null
+    let users = null
+    let user = null
+
+    function Carga(){
+        //Recuperamos los datos del querystring del URL
+        const urlParams = new URLSearchParams(window.location.search);
+        userId = urlParams.get('userId');
+        username= urlParams.get('username');
+
+        let retrievedUsersArray = localStorage.getItem('pendingUsers');
+        users = JSON.parse(retrievedUsersArray);
+
+        CargaInfoUsuario();
+        CargaDatosUsuario();
+    }
+
+    function CargaDatosUsuario(){
+        for (let i = 0; i < users.length ; i++){
+            if(users[i].username === username){
+                user = users[i];
+            }
+        }
+    }
+
+    function AltaUsuario(){
+        usuario = {
+            username: user.username,
+            password: user.password,
+            email: user.email,
+            role: $("#Role").val()
+        }
+
+        if(usuario === null){
+            alert("Ha ocurrido un problema, intentalo de nuevo.")
+        }else{
+            $.ajax({
+                type: "POST",
+                url: '/api/v1/users',
+                headers: {"Authorization": localStorage.getItem('authHeader')},
+                data: usuario,
+                // dataType: 'json',
+                success: function () {
+                    BorrarUsuarioLocalStorage();
+                }
+            });
+        }
+    }
+
+    function BorrarUsuarioLocalStorage(){
+        let arrayAux = [];
+
+        for (let i = 0; i < users.length ; i++){
+            if(users[i].username != username){
+                arrayAux.push(users[i]);
+            }
+        }
+
+        localStorage.setItem('pendingUsers', JSON.stringify(arrayAux));
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/gestionUsers/pendingUsers/pendingUsers.html?userId="+ userId);
+    }
+
+    function Volver(){
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/gestionUsers/pendingUsers/pendingUsers.html?userId="+ userId);
+    }
+
+    function CargaInfoUsuario(){
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/users/' + userId,
+            headers: {"Authorization": localStorage.getItem('authHeader')},
+            // dataType: 'json',
+            success: function (data) {
+                userRole = data.user.role;
+
+                let p = document.createElement("p");
+                let text = document.createTextNode("User: " +data.user.username+ " - Role: " +data.user.role);
+                p.appendChild(text);
+                document.getElementById("div_info_usuario").appendChild(p);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

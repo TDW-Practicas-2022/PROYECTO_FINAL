@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Página de login de la aplicación</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina de login del frontend">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body>
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia</h1>
+    </div>
+    <div class="botones-login">
+        <nav>
+            <input type="button" name="volver" value="Volver" onclick="VolverPaginaPresentacion()" />
+            <input type="button" name="register" value="Página Register" onclick="Register()" />
+        </nav>
+    </div>
+    <div class="cabecera-presentacion">
+        <p>Porfavor, logeate en la aplicación para acceder al sistema, si no dispones de una cuenta, debes registrarte previamente.</p>
+    </div>
+    <div class="formulario-login">
+        <h4>Rellena los siguientes campos:</h4>
+        <form id="form-login" method="post">
+            <label for="username">Usuario: </label>
+            <input type="text" id="username" name="username" placeholder="Usuario" autofocus/>
+            <br><br>
+            <label for="password">Contraseña: </label>
+            <input type="password" id="password" name="password" placeholder="Contraseña"/>
+            <br><br>
+            <input type="button" id="btn-login" value="Login" />
+        </form>
+    </div>
+</div>
+<script>
+    let authHeader = null;
+    let formData = null;
+    let userName = null;
+    let userId = null;
+    let userRole = null;
+    let isActive = null;
+
+    $("#btn-login").click(function(){
+        formData = $("#form-login").serializeArray()
+        userName = formData[0].value
+        $.post(
+            "/access_token",
+            $("#form-login").serialize(),
+            null
+        ).success(function (data, textStatus, request) {
+            authHeader = request.getResponseHeader('Authorization');
+            localStorage.setItem('authHeader', authHeader);
+            AccessFilter(userName);
+            console.log(data)
+        }).fail(function (xhr) {
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                message = xhr.responseJSON.message;
+            }
+            alert("Incorrecto :( \n" + message)
+        });
+    });
+
+    function AccessFilter(userName){
+        let userRole = null;
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/users',
+            headers: {"Authorization": localStorage.getItem('authHeader')},
+            // dataType: 'json',
+            success: function (data) {
+                let i = 0
+                while (i < data.users.length){
+                    if(data.users[i].user.username === userName) {
+                        userId = data.users[i].user.id;
+                        userRole = data.users[i].user.role;
+                        isActive = data.users[i].user.isActive;
+                    }
+                    i += 1;
+                }
+                if (isActive === true){
+                    //Usamos querystrings para pasar datos entre diferentes archivos HTMl
+                    if(userRole === "writer") {
+                    location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/writer.html?userId=" + userId);
+                    } else {
+                        location.replace("http://127.0.0.1:8000/webPage/readerSubsystem/reader.html?userId=" + userId);
+                    }
+                }else{
+                    alert("Lo sentimos. Tu cuenta ha sido desactivada temporalmente.")
+                }
+            }
+        })
+    }
+
+    function VolverPaginaPresentacion(){
+        location.replace("http://127.0.0.1:8000/webPage/index.html");
+    }
+
+    function Register(){
+        location.replace("http://127.0.0.1:8000/webPage/register/register.html");
+    }
+
+</script>
+</body>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Writer Perfil</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina perfil del subsistema writer del frontend">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+</head>
+<body onload="CargaDatosWriter()">
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia - Perfil de usuario</h1>
+    </div>
+    <div class="div-volver">
+        <input id="boton-volver" type="button" name="Volver" value="Volver" onclick="Volver()" />
+        <input id="boton-editarperfil" type="button" name="Editar Perfil" value="Editar Perfil" onclick="EditarPerfil()" />
+    </div>
+    <div class="datos-writer" id="datos-writer">
+    </div>
+</div>
+<script>
+    let userId = null
+    let usuario = null
+
+    function CargaDatosWriter(){
+        //Recuperamos los datos del querystring del URL para poder hacer las operaciones
+        const urlParams = new URLSearchParams(window.location.search);
+        userId = urlParams.get('userId');
+
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/users/' +userId,
+            headers: {"Authorization": localStorage.getItem('authHeader')},
+            // dataType: 'json',
+            success: function (data) {
+                usuario = data.user
+                MostrarDatosUsuario(usuario);
+            }
+        })
+    }
+
+    function MostrarDatosUsuario(usuario) {
+        console.log(usuario);
+
+        let h3 = document.createElement("h3");
+        let text_h3 = document.createTextNode("Datos del usuario " +usuario.username+ ":");
+
+        h3.appendChild(text_h3);
+        document.getElementById("datos-writer").appendChild(h3);
+
+        let idUsuario = document.createElement("h5");
+        let textoId = document.createTextNode("Id: " +usuario.id);
+
+        idUsuario.appendChild(textoId);
+        document.getElementById("datos-writer").appendChild(idUsuario);
+
+        let nombreUsuario = document.createElement("h5");
+        let textoNombre = document.createTextNode("Nombre: " +usuario.username);
+
+        nombreUsuario.appendChild(textoNombre);
+        document.getElementById("datos-writer").appendChild(nombreUsuario);
+
+        let emailUsuario = document.createElement("h5");
+        let textoEmail = document.createTextNode("Email: " +usuario.email);
+
+        emailUsuario.appendChild(textoEmail);
+        document.getElementById("datos-writer").appendChild(emailUsuario);
+
+        let rolUsuario = document.createElement("h5");
+        let textoRol = document.createTextNode("Role: " +usuario.role);
+
+        rolUsuario.appendChild(textoRol);
+        document.getElementById("datos-writer").appendChild(rolUsuario);
+    }
+
+    function Volver(){
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/writer.html?userId="+ userId);
+    }
+
+    function EditarPerfil(){
+        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/perfil/editarPerfil/editarPerfilWriter.html?userId="+ userId);
+    }
+</script>
+</body>
+</html>

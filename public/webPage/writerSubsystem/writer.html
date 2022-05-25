@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Writer Page</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina principal del subsistema writer del frontend">
+    <meta name="author" content="Alvaro Aviles Redondo - bp0259">
+    <meta name="author" content="Jesus Anton Diaz - bp0005">
+    <!--- estilos con CSS -->
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://unpkg.com/jquery@1"></script>
+    <script type="text/javascript" src="writer.js"></script>
+</head>
+<body onload="CargaDatos()">
+<div class="contenedor">
+    <div class="cabecera-principal">
+        <h1>Anales de la Ciencia</h1>
+    </div>
+    <div class="botones-writerPage">
+        <div>
+            <input id="boton-logout" type="button" name="logout" value="Logout" onclick="Logout()" />
+        </div>
+        <div>
+            <input id="boton-perfil-reader" type="button" name="Perfil" value="Perfil" onclick="Perfil()" />
+        </div>
+    </div>
+    <div id="div_info_usuario">
+    </div>
+    <div class="div-botonesCrear">
+        <input type="button" name="crearProducto" value="Crear Producto" onclick="CreateProducto()" />
+        <input type="button" name="crearPersona" value="Crear Persona" onclick="CreatePersona()" />
+        <input type="button" name="crearEntidad" value="Crear Entidad" onclick="CreateEntidad()" />
+        <input type="button" name="gestionUsuarios" value="Gestionar Usuarios" onclick="GestionUsuarios()" />
+    </div>
+    <div class="contenido">
+        <div class="div_izquierda" id="div_productos">
+        </div>
+        <div class="div_centro" id="div_personas">
+        </div>
+        <div class="div_derecha" id="div_entidades">
+        </div>
+    </div>
+</div>
+</body>
