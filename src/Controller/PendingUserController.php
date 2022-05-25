@@ -1,7 +1,7 @@
 <?php
 
 /**
- * src/Controller/UserController.php
+ * src/Controller/PendingUserController.php
  *
  * @license https://opensource.org/licenses/MIT MIT License
  * @link    http://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
@@ -17,6 +17,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\Response;
 use Slim\Routing\RouteContext;
 use TDW\ACiencia\Entity\IsActive;
+use TDW\ACiencia\Entity\PendingUser;
 use TDW\ACiencia\Entity\Role;
 use TDW\ACiencia\Entity\User;
 use TDW\ACiencia\Utility\Error;
@@ -25,10 +26,10 @@ use Throwable;
 /**
  * Class UserController
  */
-class UserController
+class PendingUserController
 {
     /** @var string ruta api gestión usuarios  */
-    public const PATH_USERS = '/users';
+    public const PATH_PENDINGUSERS = '/pendingUsers';
 
     protected EntityManager $entityManager;
 
@@ -49,7 +50,7 @@ class UserController
     public function cget(Request $request, Response $response): Response
     {
         $users = $this->entityManager
-            ->getRepository(User::class)
+            ->getRepository(PendingUser::class)
             ->findAll();
 
         // @codeCoverageIgnoreStart
@@ -81,7 +82,7 @@ class UserController
      */
     public function get(Request $request, Response $response, array $args): Response
     {
-        $user = $this->entityManager->getRepository(User::class)->find($args['userId']);
+        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['userId']);
         if (null === $user) {
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
         }
@@ -110,7 +111,7 @@ class UserController
     public function getUsername(Request $request, Response $response, array $args): Response
     {
         $usuario = $this->entityManager
-            ->getRepository(User::class)
+            ->getRepository(PendingUser::class)
             ->findOneBy([ 'username' => $args['username'] ]);
 
         return (null === $usuario)
@@ -134,7 +135,7 @@ class UserController
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
         }
 
-        $user = $this->entityManager->getRepository(User::class)->find($args['userId']);
+        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['userId']);
 
         if (null === $user) {    // 404
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
@@ -181,10 +182,6 @@ class UserController
      */
     public function post(Request $request, Response $response): Response
     {
-        if (!$this->checkWriterScope($request)) { // 403
-            return Error::error($response, StatusCode::STATUS_FORBIDDEN);
-        }
-
         $req_data
             = $request->getParsedBody() ?? json_decode($request->getBody(), true) ?? [];
 
@@ -198,7 +195,7 @@ class UserController
             ->where($criteria::expr()->eq('username', $req_data['username']))
             ->orWhere($criteria::expr()->eq('email', $req_data['email']));
         // STATUS_BAD_REQUEST 400: username or e-mail already exists
-        if ($this->entityManager->getRepository(User::class)->matching($criteria)->count()) {
+        if ($this->entityManager->getRepository(PendingUser::class)->matching($criteria)->count()) {
             return Error::error($response, StatusCode::STATUS_BAD_REQUEST);
         }
 
@@ -239,14 +236,10 @@ class UserController
      */
     public function put(Request $request, Response $response, array $args): Response
     {
-        if (!($this->checkWriterScope($request) or $this->checkReaderScope($request))) { // 403 => 404 por seguridad
-            return Error::error($response, StatusCode::STATUS_NOT_FOUND);
-        }
-
         $req_data
             = $request->getParsedBody() ?? json_decode($request->getBody(), true) ?? [];
         /** @var User|null $user */
-        $user = $this->entityManager->getRepository(User::class)->find($args['userId']);
+        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['userId']);
 
         if (null === $user) {    // 404
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
@@ -326,7 +319,7 @@ class UserController
      */
     private function findIdBy(string $attr, string $value): int
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([ $attr => $value ]);
+        $user = $this->entityManager->getRepository(PendingUser::class)->findOneBy([ $attr => $value ]);
         return $user?->getId() ?? 0;
     }
 

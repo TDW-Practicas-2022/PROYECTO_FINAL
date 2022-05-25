@@ -1376,7 +1376,7 @@ components:
           email: miw.etsisi@upm.es
           realname: pedro
           birthDate: 2020-09-09
-          isActive: true
+          isActive: active
           role: reader
 #          _links:
 #            parent:
@@ -1392,7 +1392,7 @@ components:
             email: miw.etsisi@upm.es
             realname: pedro
             birthDate: 2020-09-09
-            isActive: true
+            isActive: active
             role: reader
 #            _links:
 #              parent:
@@ -1452,7 +1452,7 @@ components:
           email: miw.etsisi@upm.es
           realname: pedro
           birthDate: 2020-09-09
-          isActive: true
+          isActive: active
           role: reader
       #          _links:
       #            parent:
@@ -1468,7 +1468,7 @@ components:
             email: miw.etsisi@upm.es
             realname: pedro
             birthDate: 2020-09-09
-            isActive: true
+            isActive: active
             role: reader
     #            _links:
     #              parent:
@@ -1695,7 +1695,7 @@ components:
               password: User_password
               realname: alvaro
               birthDate: 1999-06-18
-              isActive: "true"
+              isActive: active
               role: reader
     PendingUserRequestBody:
       description: '`Pending User` data'
@@ -1738,7 +1738,7 @@ components:
               password: User_password
               realname: alvaro
               birthDate: 1999-06-18
-              isActive: "true"
+              isActive: active
               role: reader
     LoginRequestBody:
       description: Registered **username** and **password**

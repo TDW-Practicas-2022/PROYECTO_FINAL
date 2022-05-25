@@ -48,7 +48,7 @@
                 console.log(data);
                 let i = 0
                 while (i < data.users.length) {
-                    if (data.users[i].user.id != userId) {
+                    if (data.users[i].user.id !== userId) {
                         let p = document.createElement("p");
                         let text = document.createTextNode("Id: "+data.users[i].user.id+" - Username: "+data.users[i].user.username +" ");
                         p.appendChild(text);

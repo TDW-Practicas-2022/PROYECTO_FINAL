@@ -7,7 +7,7 @@
     <meta name="author" content="Alvaro Aviles Redondo - bp0259">
     <meta name="author" content="Jesus Anton Diaz - bp0005">
     <!--- estilos con CSS -->
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../../styles.css">
     <script src="https://unpkg.com/jquery@1"></script>
 </head>
 <body onload="CargaDatosWriter()">
@@ -75,6 +75,24 @@
 
         rolUsuario.appendChild(textoRol);
         document.getElementById("datos-writer").appendChild(rolUsuario);
+
+        let realnameUsuario = document.createElement("h5");
+        let textoRealname = document.createTextNode("Realname: " +usuario.realname);
+
+        realnameUsuario.appendChild(textoRealname);
+        document.getElementById("datos-writer").appendChild(realnameUsuario);
+
+        let birthDateUsuario = document.createElement("h5");
+        let textoBirthDate = document.createTextNode("BirthDate: " +usuario.birthDate);
+
+        birthDateUsuario.appendChild(textoBirthDate);
+        document.getElementById("datos-writer").appendChild(birthDateUsuario);
+
+        let isActiveUsuario = document.createElement("h5");
+        let textoIsActive = document.createTextNode("Status: " +usuario.isActive);
+
+        isActiveUsuario.appendChild(textoIsActive);
+        document.getElementById("datos-writer").appendChild(isActiveUsuario);
     }
 
     function Volver(){

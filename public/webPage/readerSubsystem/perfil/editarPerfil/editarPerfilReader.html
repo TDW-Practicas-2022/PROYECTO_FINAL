@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Editar Perfil</title>
+    <title>Editar Perfil Reader</title>
     <meta charset="UTF-8">
-    <meta name="description" content="Página de edición del perfil de  un usuario writer">
+    <meta name="description" content="Página de edición del perfil de  un usuario reader">
     <meta name="author" content="Alvaro Aviles Redondo - bp0259">
     <meta name="author" content="Jesus Anton Diaz - bp0005">
     <!--- estilos con CSS -->
@@ -42,8 +42,6 @@
             <input type="button" name="Edit User" value="Edit User" onclick="EditUsuario()" />
         </form>
     </div>
-    <!--<div class="contenido">
-     </div>-->
 </div>
 <script>
     let userId = null
@@ -86,14 +84,14 @@
                 data: usuario,
                 // dataType: 'json',
                 success: function (data) {
-                    location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/perfil/perfilWriter.html?userId="+ userId);
+                    location.replace("http://127.0.0.1:8000/webPage/readerSubsystem/perfil/perfilReader.html?userId="+ userId);
                 }
             });
         }
     }
 
     function Volver(){
-        location.replace("http://127.0.0.1:8000/webPage/writerSubsystem/perfil/perfilWriter.html?userId="+ userId);
+        location.replace("http://127.0.0.1:8000/webPage/readerSubsystem/perfil/perfilReader.html?userId="+ userId);
     }
 
     function getEtag(){

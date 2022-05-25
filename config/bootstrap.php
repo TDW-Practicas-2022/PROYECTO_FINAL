@@ -24,6 +24,7 @@ try {
 // Register routes
 (require __DIR__ . '/routes.php')($app);
 (require __DIR__ . '/routesUsers.php')($app);
+(require __DIR__ . '/routesPendingUsers.php')($app);
 (require __DIR__ . '/routesProducts.php')($app);
 (require __DIR__ . '/routesPersons.php')($app);
 (require __DIR__ . '/routesEntities.php')($app);

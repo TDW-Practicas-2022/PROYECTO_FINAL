@@ -1,7 +1,7 @@
 <?php
 
 /**
- * src/Entity/User.php
+ * src/Entity/PendingUser.php
  *
  * @license https://opensource.org/licenses/MIT MIT License
  * @link    http://www.etsisi.upm.es/ ETS de Ingeniería de Sistemas Informáticos
@@ -18,7 +18,7 @@ use UnexpectedValueException;;
 /**
  * @ORM\Entity()
  * @ORM\Table(
- *     name                 = "user",
+ *     name                 = "pendingUser",
  *     uniqueConstraints    = {
  *          @ORM\UniqueConstraint(
  *              name="IDX_UNIQ_USERNAME", columns={ "username" }
@@ -29,7 +29,7 @@ use UnexpectedValueException;;
  *      }
  *     )
  */
-class User implements JsonSerializable
+class PendingUser implements JsonSerializable
 {
     /**
      * @ORM\Column(
