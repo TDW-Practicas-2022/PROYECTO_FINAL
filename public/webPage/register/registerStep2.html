@@ -21,6 +21,12 @@
             <label for="email">Email: </label>
             <input type="text" id="email" name="email" placeholder="example@example.com" />
             <br><br>
+            <label for="realname">Realname: </label>
+            <input type="text" id="realname" name="realname" placeholder="realname" />
+            <br><br>
+            <label for="birthDate">Email: </label>
+            <input type="text" id="birthDate" name="birthDate" placeholder="yyyy-mm-aa" />
+            <br><br>
             <input type="button" id="btn-register" value="Registro" onclick="Registro()"/>
         </form>
         <h4>Una vez compeltado el registro, debe esperar a que un Writer le de de alta en el sistema.</h4>
@@ -33,6 +39,8 @@
         let parsedUsersArray = JSON.parse(retrievedUsersArray);
 
         parsedUsersArray[parsedUsersArray.length - 1].email = $("#email").val();
+        parsedUsersArray[parsedUsersArray.length - 1].realname = $("#realname").val();
+        parsedUsersArray[parsedUsersArray.length - 1].birthDate = $("#birthDate").val();
 
         localStorage.setItem('pendingUsers', JSON.stringify(parsedUsersArray));
 

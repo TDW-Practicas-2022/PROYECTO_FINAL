@@ -82,7 +82,7 @@ class PendingUserController
      */
     public function get(Request $request, Response $response, array $args): Response
     {
-        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['userId']);
+        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['pendingUserId']);
         if (null === $user) {
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
         }
@@ -135,7 +135,7 @@ class PendingUserController
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
         }
 
-        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['userId']);
+        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['pendingUserId']);
 
         if (null === $user) {    // 404
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);
@@ -239,7 +239,7 @@ class PendingUserController
         $req_data
             = $request->getParsedBody() ?? json_decode($request->getBody(), true) ?? [];
         /** @var User|null $user */
-        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['userId']);
+        $user = $this->entityManager->getRepository(PendingUser::class)->find($args['pendingUserId']);
 
         if (null === $user) {    // 404
             return Error::error($response, StatusCode::STATUS_NOT_FOUND);

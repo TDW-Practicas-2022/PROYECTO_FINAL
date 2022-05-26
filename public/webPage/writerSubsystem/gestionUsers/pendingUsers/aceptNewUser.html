@@ -23,10 +23,16 @@
     <div id="div_formulario_alta">
         <form id="form_edit">
             <h3>Elige el rol del nuevo usuario para darle de alta en el sistema:</h3>
-            <label for="Role">Nombre del producto: </label>
+            <label for="Role">Rol: </label>
             <select name="Role" id="Role">
                 <option value="writer">writer</option>
                 <option value="reader">reader</option>
+            </select>
+            <br><br>
+            <label for="IsActive">Estado: </label>
+            <select name="IsActive" id="IsActive">
+                <option value="active">active</option>
+                <option value="inactive">inactive</option>
             </select>
             <br><br>
             <input type="button" name="Dar de alta" value="Dar de alta" onclick="AltaUsuario()" />
@@ -67,8 +73,13 @@
             username: user.username,
             password: user.password,
             email: user.email,
-            role: $("#Role").val()
+            role: $("#Role").val(),
+            isActive: $("#IsActive").val(),
+            realname: user.realname,
+            birthDate: user.birthDate
         }
+
+        console.log(usuario);
 
         if(usuario === null){
             alert("Ha ocurrido un problema, intentalo de nuevo.")
