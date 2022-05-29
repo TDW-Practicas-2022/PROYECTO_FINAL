@@ -30,25 +30,6 @@ realizar pruebas interactivas de manera completa y elegante. La especificación 
 define las operaciones sobre usuarios del sistema y `Productos`, por lo que queda por implementar las 
 operaciones relativas a la gestión de `Entidades` y `Personas`.
 
-## ⚙Instalación del proyecto️
-
-El primer paso consiste en generar un esquema de base de datos vacío y un usuario/contraseña
-con privilegios completos sobre dicho esquema.
-
-Después se deberá crear una copia del fichero `./.env` y renombrarla
-como `./.env.local`. Después se debe editar dicho fichero y modificar las variables `DATABASE_NAME`,
-`DATABASE_USER` y `DATABASE_PASSWD` con los valores generados en el paso anterior (el resto de opciones
-pueden quedar como comentarios). Una vez editado el anterior fichero y desde el directorio raíz del
-proyecto se deben ejecutar los comandos:
-```
-> composer install
-> bin/doctrine orm:schema:update --dump-sql --force
-```
-Para verificar la validez de la información de mapeo y la sincronización con la base de datos:
-```
-> bin/doctrine orm:validate
-```
-
 ## 🗄️Estructura del proyecto
 
 A continuación se describe el contenido y estructura más destacado del proyecto:
@@ -71,6 +52,31 @@ A continuación se describe el contenido y estructura más destacado del proyect
     - Pruebas unitarias y funcionales de la API
 * Directorio `vendor`:
     - Componentes desarrollados por terceros (Doctrine, DotENV, Slim, etc.)
+    
+## ⚙Instalación del proyecto️ y pasos previos
+
+El primer paso consiste en generar un esquema de base de datos vacío y un usuario/contraseña
+con privilegios completos sobre dicho esquema.
+
+Después se deberá crear una copia del fichero `./.env` y renombrarla
+como `./.env.local`. Después se debe editar dicho fichero y modificar las variables `DATABASE_NAME`,
+`DATABASE_USER` y `DATABASE_PASSWD` con los valores generados en el paso anterior (el resto de opciones
+pueden quedar como comentarios). Una vez editado el anterior fichero y desde el directorio raíz del
+proyecto se deben ejecutar los comandos:
+```
+> composer install
+> bin/doctrine orm:schema:update --dump-sql --force
+```
+Para verificar la validez de la información de mapeo y la sincronización con la base de datos:
+```
+> bin/doctrine orm:validate
+```
+Adicionalnente será necesario realizar un volcado inicial de la base de datos.Para ello, desde PhpMyadmin
+importamos en la base de datos que hayamos creado el fichero InitialDump_TDW.sql. Este fichero incluye 
+los productos, entidades y productos iniciales así como un usuario Writer con credenciales: 
+
+- userAdmin
+- \*userAdmin\* 
 
 ## 🚀Puesta en marcha de la aplicación
 
@@ -81,48 +87,18 @@ de PHP se ejecutará el comando:
 > php -S 127.0.0.1:8000 -t public
 ```
 
-Una vez hecho esto, la aplicación estará disponible en [http://127.0.0.1:8000/][lh].
+Una vez hecho esto, la aplicación web estará disponible en [http://127.0.0.1:8000/webPage/index.html][webPage].
 
-## 🛠️Ejecución de pruebas
+Adicionalmente la especificacion OpenAPI en SwaggerUI estará disponible en [http://127.0.0.1:8000/api-docs/index.html][OpenAPI]
 
-La aplicación incorpora un conjunto completo de herramientas para la ejecución de pruebas 
-unitarias y de integración con [PHPUnit][phpunit]. Empleando este conjunto de herramientas
-es posible comprobar de manera automática el correcto funcionamiento de la API completa
-sin la necesidad de herramientas adicionales.
-
-Para configurar el entorno de pruebas se debe crear un nuevo esquema de bases de datos vacío,
-y una copia del fichero `./phpunit.xml.dist` y renombrarla como `./phpunit.xml`.
-Después se debe editar este último fichero para asignar los siguientes parámetros:
-                                                                            
-* Configuración (líneas 16-18) del acceso a la nueva base de datos (`DATABASE_NAME`, `DATABASE_USER`
-y `DATABASE_PASSWD`)
-* Si se desea (líneas 22-24), se pueden modificar el nombre y contraseña de los usuarios que se van
-a emplear para realizar las pruebas (no es necesario insertarlos, lo hace automáticamente
-el método `setUpBeforeClass()` de la clase `BaseTestCase`)
-
-Para lanzar la suite de pruebas completa se debe ejecutar:
-```
-> bin/phpunit [--testdox] [--coverage-text] [-v]
-```
-
-Adicionalmente, para comprobar la calidad de las pruebas, el proyecto incluye test de mutaciones
-generados con la herramienta [Infection][infection].
-El funcionamiento es simple: se generan pequeños cambios en el código original (_mutantes_), y a continuación
-se ejecuta la batería de pruebas. Si las pruebas fallan, indica que han sido capaces de detectar la modificación
-del código, y el mutante es eliminado. Si pasa las pruebas, el mutante sobrevive y la fiabilidad de la prueba
-queda cuestionada.
-
-Para lanzar los test de mutaciones se ejecutará:
-```
-> composer infection
-```
 
 [dataMapper]: http://martinfowler.com/eaaCatalog/dataMapper.html
 [doctrine]: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/
 [dotenv]: https://packagist.org/packages/vlucas/phpdotenv
 [infection]: https://infection.github.io/guide/
 [jwt]: https://jwt.io/
-[lh]: http://127.0.0.1:8000/
+[webPage]: http://127.0.0.1:8000/webPage/index.html
+[OpenAPI]: http://127.0.0.1:8000/api-docs/index.html
 [monolog]: https://github.com/Seldaek/monolog
 [openapi]: https://www.openapis.org/
 [phpunit]: http://phpunit.de/manual/current/en/index.html
