@@ -9,8 +9,8 @@
 > 🎯Implementación de una API REST para la gestión aportaciones a la Ciencia
 
 INTEGRANTES DEL GRUPO
--Alvaro Avilés Redondo - bp0259
--Jesús Antón Díaz - bp0005
+* Alvaro Avilés Redondo - bp0259
+* Jesús Antón Díaz - bp0005
 
 Este proyecto implementa una interfaz de programación [REST][rest] desarrollada sobre
 el framework [Slim][slim]. La aplicación proporcionará las operaciones
