@@ -8,6 +8,10 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/FJavierGil/ACiencia/badges/coverage.png?b=master&s=342159ea031ef8672005fb2ccb05b3f1a91f0af1)](https://scrutinizer-ci.com/g/FJavierGil/ACiencia/?branch=master)
 > 🎯Implementación de una API REST para la gestión aportaciones a la Ciencia
 
+INTEGRANTES DEL GRUPO
+-Alvaro Avilés Redondo - bp0259
+-Jesús Antón Díaz - bp0005
+
 Este proyecto implementa una interfaz de programación [REST][rest] desarrollada sobre
 el framework [Slim][slim]. La aplicación proporcionará las operaciones
 habituales para la gestión de Productos, Entidades y Personas.
