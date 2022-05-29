@@ -17,4 +17,4 @@ INSERT INTO `product` (`id`, `name`, `birthdate`, `deathdate`, `image_url`, `wik
 (6, 'JavaScript', '1995-01-01 00:00:00', NULL, 'https://pngset.com/images/logo-javascript-pattern-copyright-framework-free-javascript-logo-label-text-symbol-trademark-transparent-png-1498648.png', 'https://es.wikipedia.org/wiki/JavaScript');
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `realname`, `birthDate`, `role_value`, `isActive_value`) VALUES
-(1, 'adminUser', 'adminUser@example.com', '$2y$10$n2FN3VyFiHLNO/QkNqWKs.wzizEOjz/UTs.yV7MvZlfWtO6VH8c/2', 'Pedro', NULL, 1, 1);
+(1, 'adminUser', 'adminUser@example.com', '$2y$10$8s/rvC2GyubibTtK09Z5Eu8Et1FuJrb3yjxiHSk8sMoVaEa0ouniu', 'Pedro', NULL, 1, 1);
